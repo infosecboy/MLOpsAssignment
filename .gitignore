@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.env
+
+# Data
+*.csv
+*.dat
+*.pkl
+
+# MLflow
+mlruns/
+
+# DVC
+.dvc/
+/data
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
