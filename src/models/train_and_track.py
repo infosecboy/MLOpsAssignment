@@ -68,6 +68,27 @@ decision_tree_rmse, decision_tree_model = train_log_evaluate_and_register_model(
 best_model_name = "Linear Regression" if linear_rmse < decision_tree_rmse else "Decision Tree"
 best_model = linear_model if linear_rmse < decision_tree_rmse else decision_tree_model
 
+# Save the best model as a pickle file for API use
+import pickle
+import os
+
+# Create models directory if it doesn't exist
+os.makedirs('models', exist_ok=True)
+
+# Save the best model
+with open('models/best_model.pkl', 'wb') as f:
+    pickle.dump(best_model, f)
+
+# Save model metadata
+model_info = {
+    'model_name': best_model_name,
+    'rmse': linear_rmse if best_model_name == "Linear Regression" else decision_tree_rmse,
+    'feature_names': list(X_train.columns)
+}
+
+with open('models/model_info.pkl', 'wb') as f:
+    pickle.dump(model_info, f)
+
 # Register the best model
 with mlflow.start_run(run_name=f"Best {best_model_name} Model") as run:
     input_example = X_test.iloc[0:1]  # Use the first row of X_test as an example
@@ -75,4 +96,4 @@ with mlflow.start_run(run_name=f"Best {best_model_name} Model") as run:
     model_uri = f"runs:/{run.info.run_id}/model"
     mlflow.register_model(model_uri=model_uri, name=f"Best {best_model_name} Model")
 
-print(f"Best model ({best_model_name}) registered in MLflow.")
+print(f"Best model ({best_model_name}) registered in MLflow and saved as pickle file.")
