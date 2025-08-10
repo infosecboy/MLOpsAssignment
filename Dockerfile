@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-python3 src/models/train_and_track.py
+RUN python src/models/train_and_track.py
 
 # Run api.py when the container launches
 CMD ["python", "src/api.py"]
