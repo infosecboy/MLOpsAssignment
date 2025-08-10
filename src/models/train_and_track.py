@@ -52,9 +52,7 @@ def train_log_evaluate_and_register_model(model, model_name):
         
         # Log the model with input example
         input_example = X_test.iloc[0:1]  # Use the first row of X_test as an example
-        mlflow.sklearn.log_model(model, name="model", input_example=input_example)
-
-
+        mlflow.sklearn.log_model(sk_model=model,artifact_path="model",input_example=input_example)
         return rmse, model
 
 # Train, log, and evaluate models
@@ -92,7 +90,7 @@ with open('models/model_info.pkl', 'wb') as f:
 # Register the best model
 with mlflow.start_run(run_name=f"Best {best_model_name} Model") as run:
     input_example = X_test.iloc[0:1]  # Use the first row of X_test as an example
-    mlflow.sklearn.log_model(best_model, name="model", input_example=input_example)
+    mlflow.sklearn.log_model(sk_model=best_model,artifact_path="model",input_example=input_example)
     model_uri = f"runs:/{run.info.run_id}/model"
     mlflow.register_model(model_uri=model_uri, name=f"Best {best_model_name} Model")
 
