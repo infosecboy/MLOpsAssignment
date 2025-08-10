@@ -100,7 +100,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   deploy_droplet:
-    # needs: build_and_push
+    needs: build_and_push
     runs-on: self-hosted
     if: github.ref == 'refs/heads/main'
     steps:
